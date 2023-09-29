@@ -77,8 +77,6 @@ class MyWebServer(socketserver.BaseRequestHandler):
                         response += f"Location: http://127.0.0.1:8080{path[3:]}/\r\n\r\n"
                         print(f"301 Moved Permanently: {response}")
                         return response
-                        
-                    pass
                 elif Path(request_line["path"]).is_file():
                     if path.endswith(".html"):
                         response = self.get_file("html", path)
@@ -89,9 +87,6 @@ class MyWebServer(socketserver.BaseRequestHandler):
                         print("invalid file type2")
                         return self.NOT_FOUND
                     pass
-                
-                
-                
             else:
                 print("invalid file path")
                 # return 404
