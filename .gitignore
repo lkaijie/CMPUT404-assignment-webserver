@@ -2,6 +2,10 @@
 
 # C extensions
 *.so
+server1.py
+server12.py
+server111.py
+test.py
 
 # Packages
 *.egg
