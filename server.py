@@ -54,11 +54,11 @@ class MyWebServer(socketserver.BaseRequestHandler):
         request["method"], request["path"] = request_line[0], request_line[1]
         # request_headers = {}
         request["path"] = "www" + request["path"]
-        print(request)
+        # print(request)
         return request
         
     def process_request(self, request_line) -> str:
-        print(request_line["path"])
+        # print(request_line["path"])
         if request_line["method"] != "GET":
             # return 405
             return self.NOT_ALLOWED
@@ -66,7 +66,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
             path = request_line["path"]
             
             if (os.path.exists(request_line["path"])):
-                print("valid")
+                # print("valid")
                 if Path(request_line["path"]).is_dir():
                     if path[-1] == '/':
                         path += "index.html"
@@ -75,7 +75,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
                         # 301 error, correct the path
                         response = "HTTP/1.1 301 Moved Permanently\r\n"
                         response += f"Location: http://127.0.0.1:8080{path[3:]}/\r\n\r\n"
-                        print(f"301 Moved Permanently: {response}")
+                        # print(f"301 Moved Permanently: {response}")
                         return response
                 elif Path(request_line["path"]).is_file():
                     if path.endswith(".html"):
@@ -84,11 +84,11 @@ class MyWebServer(socketserver.BaseRequestHandler):
                         response = self.get_file("css", path)
                     else:
                         # return 404
-                        print("invalid file type2")
+                        # print("invalid file type2")
                         return self.NOT_FOUND
                     pass
             else:
-                print("invalid file path")
+                # print("invalid file path")
                 # return 404
                 return self.NOT_FOUND
         return response
@@ -104,7 +104,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
         response += f"Content-Type: {mimetype}\r\n"
         response += f"Content-Length: {os.path.getsize(path)}\r\n\r\n"
         response += open(path).read()
-        print(response)
+        # print(response)
         
         return response    
     
@@ -115,7 +115,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
         # print(self.data)
         request_line = self.parse_request(self.data)
         response = self.process_request(request_line=request_line)
-        print(response)
+        # print(response)
         self.request.sendall(bytearray(response, 'utf-8'))
         
         
